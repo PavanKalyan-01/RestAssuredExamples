@@ -21,6 +21,7 @@
         Override from command line: mvn test -DbaseURL=https://example.com
     -->
 	<parameter name="baseURL" value="https://reqres.in" />
+	<parameter name="environment" value="Test" />
 
 	<!--
         Listeners
