@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<!-- ========================================== -->
+	<!-- PROJECT INFORMATION -->
+	<!-- ========================================== -->
+	<groupId>com.qa</groupId>
+	<artifactId>rest-api-automation-framework</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<name>REST API Test Automation Framework</name>
+	<description>Complete REST API testing framework with Apache HttpClient,
+		Log4j, and Extent Reports</description>
+
+	<!-- ========================================== -->
+	<!-- PROPERTIES -->
+	<!-- ========================================== -->
+	<properties>
+		<!-- Java Version -->
+		<maven.compiler.source>11</maven.compiler.source>
+		<maven.compiler.target>11</maven.compiler.target>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+		<!-- Dependency Versions -->
+		<httpclient.version>4.5.14</httpclient.version>
+		<jackson.version>2.15.2</jackson.version>
+		<testng.version>7.8.0</testng.version>
+		<log4j.version>1.2.17</log4j.version>
+		<extentreports.version>5.1.1</extentreports.version>
+		<json.version>20230227</json.version>
+		<maven.surefire.version>3.1.2</maven.surefire.version>
+	</properties>
+
+	<!-- ========================================== -->
+	<!-- DEPENDENCIES -->
+	<!-- ========================================== -->
+	<dependencies>
+
+		<!-- ==================== -->
+		<!-- APACHE HTTP CLIENT -->
+		<!-- ==================== -->
+		<!-- For making HTTP requests (GET, POST, PUT, DELETE) -->
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>${httpclient.version}</version>
+		</dependency>
+
+		<!-- HTTP Core (required by httpclient) -->
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpcore</artifactId>
+			<version>4.4.16</version>
+		</dependency>
+
+		<!-- ==================== -->
+		<!-- JACKSON (JSON Processing) -->
+		<!-- ==================== -->
+		<!-- Convert Java Objects to JSON and vice versa -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+
+		<!-- ==================== -->
+		<!-- TESTNG (Testing Framework) -->
+		<!-- ==================== -->
+		<!-- Test execution, assertions, test lifecycle management -->
+		<dependency>
+			<groupId>org.testng</groupId>
+			<artifactId>testng</artifactId>
+			<version>${testng.version}</version>
+		</dependency>
+
+		<!-- ==================== -->
+		<!-- LOG4J (Logging Framework) -->
+		<!-- ==================== -->
+		<!-- For logging test execution details -->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>${log4j.version}</version>
+		</dependency>
+
+		<!-- ==================== -->
+		<!-- EXTENT REPORTS (HTML Reporting) -->
+		<!-- ==================== -->
+		<!-- Generate beautiful HTML test reports -->
+		<dependency>
+			<groupId>com.aventstack</groupId>
+			<artifactId>extentreports</artifactId>
+			<version>${extentreports.version}</version>
+		</dependency>
+
+		<!-- ==================== -->
+		<!-- JSON (org.json) -->
+		<!-- ==================== -->
+		<!-- Additional JSON parsing library -->
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>${json.version}</version>
+		</dependency>
+
+		<!-- ==================== -->
+		<!-- COMMONS IO (File operations) -->
+		<!-- ==================== -->
+		<!-- Utility for file operations -->
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.13.0</version>
+		</dependency>
+
+		<!-- ==================== -->
+		<!-- HAMCREST (Matchers for assertions) -->
+		<!-- ==================== -->
+		<!-- Advanced matchers for better assertions -->
+		<dependency>
+			<groupId>org.hamcrest</groupId>
+			<artifactId>hamcrest</artifactId>
+			<version>2.2</version>
+		</dependency>
+
+	</dependencies>
+
+	<!-- ========================================== -->
+	<!-- BUILD CONFIGURATION -->
+	<!-- ========================================== -->
+	<build>
+		<plugins>
+
+			<!-- ==================== -->
+			<!-- MAVEN COMPILER PLUGIN -->
+			<!-- ==================== -->
+			<!-- Compiles Java source code -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.11.0</version>
+				<configuration>
+					<source>${maven.compiler.source}</source>
+					<target>${maven.compiler.target}</target>
+					<encoding>${project.build.sourceEncoding}</encoding>
+				</configuration>
+			</plugin>
+
+			<!-- ==================== -->
+			<!-- MAVEN SUREFIRE PLUGIN -->
+			<!-- ==================== -->
+			<!-- Runs TestNG tests -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>${maven.surefire.version}</version>
+				<configuration>
+					<!-- TestNG XML Suite file -->
+					<suiteXmlFiles>
+						<suiteXmlFile>testng.xml</suiteXmlFile>
+					</suiteXmlFiles>
+
+					<!-- Parallel execution settings -->
+					<!--
+                    <parallel>methods</parallel>
+                    <threadCount>5</threadCount>
+                    -->
+
+					<!-- System properties -->
+					<systemPropertyVariables>
+						<environment>${environment}</environment>
+					</systemPropertyVariables>
+
+					<!-- Test failure behavior -->
+					<testFailureIgnore>false</testFailureIgnore>
+
+					<!-- Reporting -->
+					<reportsDirectory>
+						${project.build.directory}/surefire-reports</reportsDirectory>
+				</configuration>
+			</plugin>
+
+			<!-- ==================== -->
+			<!-- MAVEN RESOURCES PLUGIN -->
+			<!-- ==================== -->
+			<!-- Handles resource files -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.3.1</version>
+				<configuration>
+					<encoding>${project.build.sourceEncoding}</encoding>
+				</configuration>
+			</plugin>
+
+			<!-- ==================== -->
+			<!-- MAVEN CLEAN PLUGIN -->
+			<!-- ==================== -->
+			<!-- Cleans build directory -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>3.3.1</version>
+			</plugin>
+
+		</plugins>
+	</build>
+
+	<!-- ========================================== -->
+	<!-- REPORTING (Optional) -->
+	<!-- ========================================== -->
+	<reporting>
+		<plugins>
+			<!-- Surefire Report Plugin for HTML test results -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-report-plugin</artifactId>
+				<version>${maven.surefire.version}</version>
+			</plugin>
+		</plugins>
+	</reporting>
+
+</project>
+
